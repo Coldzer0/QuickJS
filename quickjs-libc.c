@@ -1999,6 +1999,17 @@ static JSValue js_os_stat(JSContext *ctx, JSValueConst this_val,
         JS_DefinePropertyValueStr(ctx, obj, "blocks",
                                   JS_NewInt64(ctx, st.st_blocks),
                                   JS_PROP_C_W_E);
+#if defined(__APPLE__)
+        JS_DefinePropertyValueStr(ctx, obj, "atime",
+                                  JS_NewInt64(ctx, timespec_to_ms(&st.st_atimespec)),
+                                  JS_PROP_C_W_E);
+        JS_DefinePropertyValueStr(ctx, obj, "mtime",
+                                  JS_NewInt64(ctx, timespec_to_ms(&st.st_mtimespec)),
+                                  JS_PROP_C_W_E);
+        JS_DefinePropertyValueStr(ctx, obj, "ctime",
+                                  JS_NewInt64(ctx, timespec_to_ms(&st.st_ctimespec)),
+                                  JS_PROP_C_W_E);
+#else
         JS_DefinePropertyValueStr(ctx, obj, "atime",
                                   JS_NewInt64(ctx, timespec_to_ms(&st.st_atim)),
                                   JS_PROP_C_W_E);
@@ -2008,6 +2019,8 @@ static JSValue js_os_stat(JSContext *ctx, JSValueConst this_val,
         JS_DefinePropertyValueStr(ctx, obj, "ctime",
                                   JS_NewInt64(ctx, timespec_to_ms(&st.st_ctim)),
                                   JS_PROP_C_W_E);
+#endif
+
     }
     return make_obj_error(ctx, obj, err);
 }
