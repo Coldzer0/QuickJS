@@ -281,6 +281,7 @@ static inline JSValue __JS_NewFloat64(JSContext *ctx, double d)
 #define JS_EVAL_FLAG_STRIP    (1 << 4) /* force 'strip' mode */
 /* compile but do not run. The result is an object with a
    JS_TAG_FUNCTION_BYTECODE or JS_TAG_MODULE tag. It can be executed
+   with JS_EvalFunction(). */
 #define JS_EVAL_FLAG_COMPILE_ONLY (1 << 5)
 
 typedef JSValue JSCFunction(JSContext *ctx, JSValueConst this_val, int argc, JSValueConst *argv);
