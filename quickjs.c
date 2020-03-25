@@ -1984,7 +1984,7 @@ void JS_FreeRuntime(JSRuntime *rt)
     }
 }
 
-#if defined(EMSCRIPTEN)
+#if 1
 /* currently no stack limitation */
 static inline uint8_t *js_get_stack_pointer(void)
 {
